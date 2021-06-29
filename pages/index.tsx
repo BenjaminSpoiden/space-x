@@ -1,6 +1,14 @@
 import Head from 'next/head'
+import { withApollo } from '../lib/withApollo'
+import { getDataFromTree } from "@apollo/client/react/ssr"
+import { useLaunchesQuery } from '../generated'
 
-export default function Home() {
+function Home() {
+
+  const { data } = useLaunchesQuery()
+
+  console.log(data)
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <Head>
@@ -80,3 +88,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default withApollo(Home, { getDataFromTree })
