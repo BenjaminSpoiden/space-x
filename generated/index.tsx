@@ -744,12 +744,15 @@ export type LaunchesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type LaunchesQuery = (
   { __typename?: 'Query' }
-  & { nextLaunch?: Maybe<Array<Maybe<(
+  & { launches?: Maybe<Array<Maybe<(
     { __typename?: 'Launch' }
-    & Pick<Launch, 'mission_name' | 'launch_year' | 'launch_success'>
+    & Pick<Launch, 'flight_number' | 'mission_name' | 'launch_year'>
     & { rocket?: Maybe<(
       { __typename?: 'LaunchRocket' }
-      & Pick<LaunchRocket, 'rocket_name'>
+      & Pick<LaunchRocket, 'rocket_name' | 'rocket_type'>
+    )>, launch_site?: Maybe<(
+      { __typename?: 'LaunchSite' }
+      & Pick<LaunchSite, 'site_name'>
     )>, links?: Maybe<(
       { __typename?: 'LaunchLinks' }
       & Pick<LaunchLinks, 'mission_patch'>
@@ -757,19 +760,34 @@ export type LaunchesQuery = (
   )>>> }
 );
 
+export type InfoQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type InfoQuery = (
+  { __typename?: 'Query' }
+  & { info?: Maybe<(
+    { __typename?: 'Info' }
+    & Pick<Info, 'name' | 'summary'>
+  )> }
+);
+
 
 export const LaunchesDocument = gql`
     query Launches {
-  nextLaunch: launches(order: desc) {
+  launches(order: desc) {
+    flight_number
     mission_name
-    launch_year
     rocket {
       rocket_name
+      rocket_type
     }
-    launch_success
+    launch_site {
+      site_name
+    }
     links {
       mission_patch
     }
+    launch_year
   }
 }
     `;
@@ -800,3 +818,38 @@ export function useLaunchesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<L
 export type LaunchesQueryHookResult = ReturnType<typeof useLaunchesQuery>;
 export type LaunchesLazyQueryHookResult = ReturnType<typeof useLaunchesLazyQuery>;
 export type LaunchesQueryResult = Apollo.QueryResult<LaunchesQuery, LaunchesQueryVariables>;
+export const InfoDocument = gql`
+    query Info {
+  info {
+    name
+    summary
+  }
+}
+    `;
+
+/**
+ * __useInfoQuery__
+ *
+ * To run a query within a React component, call `useInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useInfoQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useInfoQuery(baseOptions?: Apollo.QueryHookOptions<InfoQuery, InfoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<InfoQuery, InfoQueryVariables>(InfoDocument, options);
+      }
+export function useInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<InfoQuery, InfoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<InfoQuery, InfoQueryVariables>(InfoDocument, options);
+        }
+export type InfoQueryHookResult = ReturnType<typeof useInfoQuery>;
+export type InfoLazyQueryHookResult = ReturnType<typeof useInfoLazyQuery>;
+export type InfoQueryResult = Apollo.QueryResult<InfoQuery, InfoQueryVariables>;
