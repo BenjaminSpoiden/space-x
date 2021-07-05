@@ -28,4 +28,19 @@ export const SPACEX_INFO = gql`
     summary
   }
 }
-` 
+`
+
+export const SPACEX_HISTORY = gql`
+  query History($limit: Int, $offset: Int) {
+  history(limit: $limit, order: desc, offset: $offset) {
+    title
+    details
+    event_date_utc
+    links {
+      article
+      wikipedia
+      reddit
+    }
+  }
+}
+`

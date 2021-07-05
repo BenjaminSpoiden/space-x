@@ -771,6 +771,24 @@ export type InfoQuery = (
   )> }
 );
 
+export type HistoryQueryVariables = Exact<{
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type HistoryQuery = (
+  { __typename?: 'Query' }
+  & { history?: Maybe<Array<Maybe<(
+    { __typename?: 'History' }
+    & Pick<History, 'title' | 'details' | 'event_date_utc'>
+    & { links?: Maybe<(
+      { __typename?: 'HistoryLinks' }
+      & Pick<HistoryLinks, 'article' | 'wikipedia' | 'reddit'>
+    )> }
+  )>>> }
+);
+
 
 export const LaunchesDocument = gql`
     query Launches {
@@ -853,3 +871,46 @@ export function useInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<InfoQ
 export type InfoQueryHookResult = ReturnType<typeof useInfoQuery>;
 export type InfoLazyQueryHookResult = ReturnType<typeof useInfoLazyQuery>;
 export type InfoQueryResult = Apollo.QueryResult<InfoQuery, InfoQueryVariables>;
+export const HistoryDocument = gql`
+    query History($limit: Int, $offset: Int) {
+  history(limit: $limit, order: desc, offset: $offset) {
+    title
+    details
+    event_date_utc
+    links {
+      article
+      wikipedia
+      reddit
+    }
+  }
+}
+    `;
+
+/**
+ * __useHistoryQuery__
+ *
+ * To run a query within a React component, call `useHistoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHistoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHistoryQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useHistoryQuery(baseOptions?: Apollo.QueryHookOptions<HistoryQuery, HistoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<HistoryQuery, HistoryQueryVariables>(HistoryDocument, options);
+      }
+export function useHistoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HistoryQuery, HistoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<HistoryQuery, HistoryQueryVariables>(HistoryDocument, options);
+        }
+export type HistoryQueryHookResult = ReturnType<typeof useHistoryQuery>;
+export type HistoryLazyQueryHookResult = ReturnType<typeof useHistoryLazyQuery>;
+export type HistoryQueryResult = Apollo.QueryResult<HistoryQuery, HistoryQueryVariables>;

@@ -1,4 +1,5 @@
 import { ApolloClient, ApolloProvider, HttpLink, InMemoryCache } from "@apollo/client"
+import { offsetLimitPagination } from "@apollo/client/utilities"
 import nextWithApollo from "next-with-apollo"
 import { useRouter } from "next/dist/client/router"
 
@@ -12,7 +13,15 @@ export const withApollo = nextWithApollo(
             headers: {
                 ...(headers as Record<string, string>)
             },
-            cache: new InMemoryCache().restore(initialState || {})
+            cache: new InMemoryCache({
+                typePolicies: {
+                    Query: {
+                        fields: {
+                            history: offsetLimitPagination()
+                        }
+                    }
+                }
+            }).restore(initialState || {})
         })
     }, {
         render: ({ Page, props }) => {
