@@ -25,7 +25,8 @@ module.exports = {
         '100': '30rem'
       },
       fontFamily: {
-        'big-shoulder-display': ['"Big Shoulders Display"', 'cursive']
+        'big-shoulder-display': ['"Big Shoulders Display"', 'cursive'],
+        'news-cycle': ['"News Cycle"', 'sans-serif']
       },
       
       rotate: {

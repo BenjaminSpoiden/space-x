@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Transition } from "@headlessui/react"
-
+import Link from "next/link"
 export const Navbar = () => {
     const [ isOpen, setIsOpen ] = useState(false)
 
@@ -11,41 +11,33 @@ export const Navbar = () => {
             <div className="flex items-center justify-between h-16">
                 <div className="flex items-center">
                 <div className="flex-shrink-0">
-                    <img
-                    className="h-8 w-8"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                    alt="Workflow"
-                    />
+                    <Link href="/" >
+                        <img
+                        className="h-8 w-8"
+                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                        alt="Workflow"
+                        />
+                    </Link>
                 </div>
                 <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
-                    <a
-                        href="#"
-                        className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                        Falcon 1
-                    </a>
+                    <Link href="/falcon9">
+                        <a className="hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium">Falcon 9</a>
+                    </Link>
 
-                    <a
-                        href="#"
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                        Falcon 9
-                    </a>
+                    <Link href="/falcon-heavy" >
+                        <a className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            Falcon Heavy
+                        </a>
+                    </Link>
 
-                    <a
-                        href="#"
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                        Falcon Heavy
-                    </a>
-
-                    <a
-                        href="#"
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    >
-                        Starship
-                    </a>
+                    <Link href="/starship" >
+                        <a
+                            className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        >
+                            Starship
+                        </a>
+                    </Link>
 
                     
                     </div>
@@ -110,33 +102,32 @@ export const Navbar = () => {
             {(ref) => (
                 <div className="md:hidden" id="mobile-menu">
                 <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                    <a
-                    href="#"
-                    className="hover:bg-gray-700 text-white block px-3 py-2 rounded-md text-base font-medium"
-                    >
-                        Falcon 1
-                    </a>
+                    <Link href="/falcon9" >
+                        <a
+                        
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                        >
+                            Falcon 9
+                        </a>
+                    </Link>
 
-                    <a
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                    >
-                        Falcon 9
-                    </a>
+                    <Link href="/falcon-heavy" >
+                        <a
+                        href="#"
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                        >
+                            Falcon Heavy
+                        </a>
+                    </Link>
 
-                    <a
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                    >
-                        Falcon Heavy
-                    </a>
-
-                    <a
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                    >
-                        Starship
-                    </a>
+                    <Link href="/starship" >
+                        <a
+                        href="#"
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                        >
+                            Starship
+                        </a>
+                    </Link>
                 </div>
                 </div>
             )}

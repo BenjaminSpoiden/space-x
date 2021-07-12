@@ -44,3 +44,47 @@ export const SPACEX_HISTORY = gql`
   }
 }
 `
+
+export const ROCKET = gql`
+  query Rocket($rocketName: String!) {
+  rocket(id: $rocketName) {
+    id
+    active
+    stages
+    boosters
+    first_flight
+    cost_per_launch
+    success_rate_pct
+    flickr_images
+    description
+    wikipedia
+    height {
+      meters
+      feet
+    }
+    landing_legs {
+      material
+      number
+    }
+    diameter {
+      meters
+      feet
+    }
+    mass {
+      kg
+      lb
+    }
+    payload_weights {
+      id
+      name
+    }
+    rocket_name
+    rocket_type
+    second_stage {
+      engines
+      fuel_amount_tons
+    }
+  } 
+}
+
+`

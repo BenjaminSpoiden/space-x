@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import { withApollo } from '../lib/withApollo'
 import { getDataFromTree } from "@apollo/client/react/ssr"
+import { withApollo } from '../lib/withApollo'
 import { useHistoryQuery, useInfoQuery } from '../generated'
 import { Layout } from '../components/Layout'
 import { Rockets } from '../components/Rockets'
@@ -22,7 +22,7 @@ function Home() {
   })
 
   return (
-    <Layout title="Create Next App" >
+    <Layout title="SpaceX" >
       <div>
         <main className="max-w-8xl mx-auto ">
           <div className="flex max-w-8xl mx-auto min-h-screen py-6 sm:px-6 lg:px-8">
@@ -32,7 +32,7 @@ function Home() {
           </div> 
           <Rockets />
           <div> 
-            <h1 className="py-10 font-mono font-bold text-2xl tracking-widest text-yellow-500 ">NEWS</h1>
+            <h1 className="py-10 mt-10 font-mono font-bold text-2xl tracking-widest text-yellow-500 ">NEWS</h1>
             <Histories histories={histories?.history} />
             {limit < 20 ? <button 
               className="flex mx-auto hover:bg-yellow-500 transition ease-in-out duration-300 hover:text-white text-yellow-500 font-mono px-4 py-2 m-16 border-2 border-dashed border-yellow-500 " 
@@ -43,7 +43,7 @@ function Home() {
                 fetchMore({
                 variables: {
                   offset: currentLen,
-                  limit: 3
+                  limit: 6
                 }}).then(fetchMoreResults => {
                   setLimit(currentLen + fetchMoreResults?.data?.history?.length)
                   setIsLoading(c => !c)
